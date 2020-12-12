@@ -44,10 +44,11 @@
             this.captionTextbox = new System.Windows.Forms.TextBox();
             this.captionLabel = new System.Windows.Forms.Label();
             this.connectionsBox = new System.Windows.Forms.GroupBox();
+            this.lineColorPreview = new System.Windows.Forms.PictureBox();
             this.connectionLineColorLabel = new System.Windows.Forms.Label();
             this.connectionLineWidthLabel = new System.Windows.Forms.Label();
             this.connectionLineWidthTextbox = new System.Windows.Forms.NumericUpDown();
-            this.lineColorPreview = new System.Windows.Forms.PictureBox();
+            this.cloneNodeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.selectedNodeBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textColorPreview)).BeginInit();
@@ -55,8 +56,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.textSizeTextbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sizeTextbox)).BeginInit();
             this.connectionsBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionLineWidthTextbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineColorPreview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.connectionLineWidthTextbox)).BeginInit();
             this.SuspendLayout();
             // 
             // addNodeButton
@@ -65,14 +66,14 @@
             this.addNodeButton.Name = "addNodeButton";
             this.addNodeButton.Size = new System.Drawing.Size(153, 23);
             this.addNodeButton.TabIndex = 1;
-            this.addNodeButton.Text = "Add Node";
+            this.addNodeButton.Text = "Add New Node";
             this.addNodeButton.UseVisualStyleBackColor = true;
             this.addNodeButton.Click += new System.EventHandler(this.addNodeButton_Click);
             // 
             // canvas
             // 
             this.canvas.BackColor = System.Drawing.Color.White;
-            this.canvas.Location = new System.Drawing.Point(13, 13);
+            this.canvas.Location = new System.Drawing.Point(12, 12);
             this.canvas.Name = "canvas";
             this.canvas.Size = new System.Drawing.Size(800, 600);
             this.canvas.TabIndex = 2;
@@ -84,6 +85,7 @@
             // 
             // selectedNodeBox
             // 
+            this.selectedNodeBox.Controls.Add(this.cloneNodeButton);
             this.selectedNodeBox.Controls.Add(this.textColorPreview);
             this.selectedNodeBox.Controls.Add(this.bgColorPreview);
             this.selectedNodeBox.Controls.Add(this.addChildNodeButton);
@@ -97,9 +99,9 @@
             this.selectedNodeBox.Controls.Add(this.captionTextbox);
             this.selectedNodeBox.Controls.Add(this.captionLabel);
             this.selectedNodeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedNodeBox.Location = new System.Drawing.Point(819, 153);
+            this.selectedNodeBox.Location = new System.Drawing.Point(819, 132);
             this.selectedNodeBox.Name = "selectedNodeBox";
-            this.selectedNodeBox.Size = new System.Drawing.Size(153, 254);
+            this.selectedNodeBox.Size = new System.Drawing.Size(153, 285);
             this.selectedNodeBox.TabIndex = 3;
             this.selectedNodeBox.TabStop = false;
             this.selectedNodeBox.Text = "Selected Node";
@@ -128,7 +130,7 @@
             // addChildNodeButton
             // 
             this.addChildNodeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addChildNodeButton.Location = new System.Drawing.Point(6, 196);
+            this.addChildNodeButton.Location = new System.Drawing.Point(6, 225);
             this.addChildNodeButton.Name = "addChildNodeButton";
             this.addChildNodeButton.Size = new System.Drawing.Size(141, 23);
             this.addChildNodeButton.TabIndex = 12;
@@ -139,7 +141,7 @@
             // deleteNodeButton
             // 
             this.deleteNodeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteNodeButton.Location = new System.Drawing.Point(6, 225);
+            this.deleteNodeButton.Location = new System.Drawing.Point(6, 254);
             this.deleteNodeButton.Name = "deleteNodeButton";
             this.deleteNodeButton.Size = new System.Drawing.Size(141, 23);
             this.deleteNodeButton.TabIndex = 10;
@@ -268,13 +270,23 @@
             this.connectionsBox.Controls.Add(this.connectionLineWidthLabel);
             this.connectionsBox.Controls.Add(this.connectionLineWidthTextbox);
             this.connectionsBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connectionsBox.Location = new System.Drawing.Point(819, 63);
+            this.connectionsBox.Location = new System.Drawing.Point(819, 42);
             this.connectionsBox.Name = "connectionsBox";
             this.connectionsBox.Size = new System.Drawing.Size(153, 84);
             this.connectionsBox.TabIndex = 4;
             this.connectionsBox.TabStop = false;
             this.connectionsBox.Text = "Connection Lines";
             this.connectionsBox.Visible = false;
+            // 
+            // lineColorPreview
+            // 
+            this.lineColorPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
+            this.lineColorPreview.Location = new System.Drawing.Point(122, 52);
+            this.lineColorPreview.Name = "lineColorPreview";
+            this.lineColorPreview.Size = new System.Drawing.Size(25, 25);
+            this.lineColorPreview.TabIndex = 15;
+            this.lineColorPreview.TabStop = false;
+            this.lineColorPreview.Click += new System.EventHandler(this.colorPreview_Click);
             // 
             // connectionLineColorLabel
             // 
@@ -319,15 +331,16 @@
             0});
             this.connectionLineWidthTextbox.ValueChanged += new System.EventHandler(this.onValueChangedHandler);
             // 
-            // lineColorPreview
+            // cloneNodeButton
             // 
-            this.lineColorPreview.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(51)))));
-            this.lineColorPreview.Location = new System.Drawing.Point(122, 52);
-            this.lineColorPreview.Name = "lineColorPreview";
-            this.lineColorPreview.Size = new System.Drawing.Size(25, 25);
-            this.lineColorPreview.TabIndex = 15;
-            this.lineColorPreview.TabStop = false;
-            this.lineColorPreview.Click += new System.EventHandler(this.colorPreview_Click);
+            this.cloneNodeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cloneNodeButton.Location = new System.Drawing.Point(6, 196);
+            this.cloneNodeButton.Name = "cloneNodeButton";
+            this.cloneNodeButton.Size = new System.Drawing.Size(141, 23);
+            this.cloneNodeButton.TabIndex = 15;
+            this.cloneNodeButton.Text = "Clone Node";
+            this.cloneNodeButton.UseVisualStyleBackColor = true;
+            this.cloneNodeButton.Click += new System.EventHandler(this.cloneNodeButton_Click);
             // 
             // mainForm
             // 
@@ -353,8 +366,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.sizeTextbox)).EndInit();
             this.connectionsBox.ResumeLayout(false);
             this.connectionsBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionLineWidthTextbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineColorPreview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.connectionLineWidthTextbox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -380,6 +393,7 @@
         private System.Windows.Forms.PictureBox bgColorPreview;
         private System.Windows.Forms.PictureBox textColorPreview;
         private System.Windows.Forms.PictureBox lineColorPreview;
+        private System.Windows.Forms.Button cloneNodeButton;
     }
 }
 
