@@ -40,6 +40,17 @@ namespace Bubble_Map_Maker
             canvas.Invalidate();
         }
 
+        private void cloneNodeButton_Click(object sender, EventArgs e)
+        {
+            BubbleMapNode newNode = new BubbleMapNode(nodeList.Count + 1, selectedNode.Caption, selectedNode.XPosition + 50, selectedNode.YPosition + 50, nodeList.Count, selectedNode.Size, selectedNode.BackgroundColor, selectedNode.TextColor, selectedNode.TextSize);
+            nodeList.Add(nodeList.Count + 1, newNode);
+            selectNode(newNode);
+            if (DEBUG) Console.WriteLine("New node added, " + nodeList.Count + " in the node list.");
+            updateNode();
+            updateConnectionLine();
+            canvas.Invalidate();
+        }
+
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             mouseX = e.X;
@@ -250,5 +261,6 @@ namespace Bubble_Map_Maker
             updateConnectionLine();
             canvas.Invalidate();
         }
+
     }
 }
