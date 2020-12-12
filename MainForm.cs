@@ -133,9 +133,9 @@ namespace Bubble_Map_Maker
             selectedNodeBox.Visible = true;
             captionTextbox.Text = node.Caption;
             sizeTextbox.Value = node.Size;
-            bgColorTextbox.Text = node.BackgroundColor;
+            bgColorPreview.BackColor = ColorTranslator.FromHtml(node.BackgroundColor);
             textSizeTextbox.Value = node.TextSize;
-            textColorTextbox.Text = node.TextColor;
+            textColorPreview.BackColor = ColorTranslator.FromHtml(node.TextColor);
         }
 
         public void updateNode()
@@ -144,9 +144,9 @@ namespace Bubble_Map_Maker
             {
                 selectedNode.Caption = captionTextbox.Text;
                 selectedNode.Size = (int)sizeTextbox.Value;
-                selectedNode.BackgroundColor = bgColorTextbox.Text;
+                selectedNode.BackgroundColor = ColorTranslator.ToHtml(bgColorPreview.BackColor);
                 selectedNode.TextSize = (int)textSizeTextbox.Value;
-                selectedNode.TextColor = textColorTextbox.Text;
+                selectedNode.TextColor = ColorTranslator.ToHtml(textColorPreview.BackColor);
                 nodeList[selectedNode.getId()] = selectedNode;
             }
         }
@@ -156,20 +156,8 @@ namespace Bubble_Map_Maker
             foreach (NodeConnection connection in nodeConnectionList.Values)
             {
                 connection.Size = (int)connectionLineWidthTextbox.Value;
-                connection.Color = connectionLineColorTextbox.Text;
+                connection.Color = ColorTranslator.ToHtml(lineColorPreview.BackColor);
             }
-        }
-
-        private void updateNodeButton_Click(object sender, EventArgs e)
-        {
-            updateNode();
-            canvas.Invalidate();
-        }
-
-        private void updateConnectionLineButton_Click(object sender, EventArgs e)
-        {
-            updateConnectionLine();
-            canvas.Invalidate();
         }
 
         public void showConnectionLineBox()
@@ -189,7 +177,7 @@ namespace Bubble_Map_Maker
             {
                 BubbleMapNode newNode = new BubbleMapNode(nodeList.Count + 1, "New Node", 0, 0, nodeList.Count, 150, "#333333", "#ffffff", 12);
                 nodeList.Add(nodeList.Count + 1, newNode);
-                NodeConnection newConnection = new NodeConnection(nodeConnectionList.Count + 1, selectedNode.getId(), newNode.getId(), 2, "#333333");
+                NodeConnection newConnection = new NodeConnection(nodeConnectionList.Count + 1, selectedNode.getId(), newNode.getId(), (int)connectionLineWidthTextbox.Value, ColorTranslator.ToHtml(lineColorPreview.BackColor));
                 nodeConnectionList.Add(newConnection.getId(), newConnection);
                 selectNode(newNode);
             }
@@ -234,5 +222,27 @@ namespace Bubble_Map_Maker
             canvas.Invalidate();
         }
 
+        private void colorPreview_Click(object sender, EventArgs e)
+        {
+            ColorDialog bgColorDialog = new ColorDialog();
+            bgColorDialog.AllowFullOpen = true;
+            bgColorDialog.SolidColorOnly = true;
+
+            if (bgColorDialog.ShowDialog() == DialogResult.OK)
+            {
+                PictureBox preview = (PictureBox)sender;
+                preview.BackColor = bgColorDialog.Color;
+                updateNode();
+                updateConnectionLine();
+                canvas.Invalidate();
+            }
+        }
+
+        private void onValueChangedHandler(object sender, EventArgs e)
+        {
+            updateNode();
+            updateConnectionLine();
+            canvas.Invalidate();
+        }
     }
 }
