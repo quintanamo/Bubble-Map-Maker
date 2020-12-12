@@ -116,7 +116,8 @@ namespace Bubble_Map_Maker
                 StringFormat sf = new StringFormat();
                 sf.LineAlignment = StringAlignment.Center;
                 sf.Alignment = StringAlignment.Center;
-                g.DrawString(node.Caption, captionFont, brush, (node.XPosition + node.Size/2), (node.YPosition + node.Size/2), sf);
+                RectangleF textRect = new RectangleF(node.XPosition, node.YPosition, node.Size, node.Size);
+                g.DrawString(node.Caption, captionFont, brush, textRect, sf);
             }
         }
 
