@@ -57,6 +57,11 @@ namespace Bubble_Map_Maker
 
         private void canvas_MouseDown(object sender, MouseEventArgs e)
         {
+            if (selectedNode != null)
+            {
+                updateNode();
+                updateConnectionLine();
+            }
             originalX = mouseX;
             originalY = mouseY;
             isMouseDown = true;
