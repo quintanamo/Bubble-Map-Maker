@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.addNodeButton = new System.Windows.Forms.Button();
             this.canvas = new System.Windows.Forms.PictureBox();
             this.selectedNodeBox = new System.Windows.Forms.GroupBox();
+            this.cloneNodeButton = new System.Windows.Forms.Button();
             this.textColorPreview = new System.Windows.Forms.PictureBox();
             this.bgColorPreview = new System.Windows.Forms.PictureBox();
             this.addChildNodeButton = new System.Windows.Forms.Button();
@@ -48,7 +50,16 @@
             this.connectionLineColorLabel = new System.Windows.Forms.Label();
             this.connectionLineWidthLabel = new System.Windows.Forms.Label();
             this.connectionLineWidthTextbox = new System.Windows.Forms.NumericUpDown();
-            this.cloneNodeButton = new System.Windows.Forms.Button();
+            this.mainToolstrip = new System.Windows.Forms.ToolStrip();
+            this.fileMenuDropdown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.openMapButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveMapButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportMapButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.newMapButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.editMenuDropdown = new System.Windows.Forms.ToolStripDropDownButton();
+            this.undoButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.redoButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.setDefaultStylesButton = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.selectedNodeBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textColorPreview)).BeginInit();
@@ -58,13 +69,15 @@
             this.connectionsBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lineColorPreview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.connectionLineWidthTextbox)).BeginInit();
+            this.mainToolstrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // addNodeButton
             // 
-            this.addNodeButton.Location = new System.Drawing.Point(819, 13);
+            this.addNodeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.addNodeButton.Location = new System.Drawing.Point(462, 39);
             this.addNodeButton.Name = "addNodeButton";
-            this.addNodeButton.Size = new System.Drawing.Size(153, 23);
+            this.addNodeButton.Size = new System.Drawing.Size(150, 23);
             this.addNodeButton.TabIndex = 1;
             this.addNodeButton.Text = "Add New Node";
             this.addNodeButton.UseVisualStyleBackColor = true;
@@ -72,10 +85,13 @@
             // 
             // canvas
             // 
+            this.canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.canvas.BackColor = System.Drawing.Color.White;
-            this.canvas.Location = new System.Drawing.Point(12, 12);
+            this.canvas.Location = new System.Drawing.Point(12, 39);
             this.canvas.Name = "canvas";
-            this.canvas.Size = new System.Drawing.Size(800, 600);
+            this.canvas.Size = new System.Drawing.Size(440, 403);
             this.canvas.TabIndex = 2;
             this.canvas.TabStop = false;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
@@ -85,6 +101,7 @@
             // 
             // selectedNodeBox
             // 
+            this.selectedNodeBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.selectedNodeBox.Controls.Add(this.cloneNodeButton);
             this.selectedNodeBox.Controls.Add(this.textColorPreview);
             this.selectedNodeBox.Controls.Add(this.bgColorPreview);
@@ -99,13 +116,24 @@
             this.selectedNodeBox.Controls.Add(this.captionTextbox);
             this.selectedNodeBox.Controls.Add(this.captionLabel);
             this.selectedNodeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedNodeBox.Location = new System.Drawing.Point(819, 132);
+            this.selectedNodeBox.Location = new System.Drawing.Point(462, 158);
             this.selectedNodeBox.Name = "selectedNodeBox";
-            this.selectedNodeBox.Size = new System.Drawing.Size(153, 285);
+            this.selectedNodeBox.Size = new System.Drawing.Size(150, 285);
             this.selectedNodeBox.TabIndex = 3;
             this.selectedNodeBox.TabStop = false;
             this.selectedNodeBox.Text = "Selected Node";
             this.selectedNodeBox.Visible = false;
+            // 
+            // cloneNodeButton
+            // 
+            this.cloneNodeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cloneNodeButton.Location = new System.Drawing.Point(6, 196);
+            this.cloneNodeButton.Name = "cloneNodeButton";
+            this.cloneNodeButton.Size = new System.Drawing.Size(141, 23);
+            this.cloneNodeButton.TabIndex = 15;
+            this.cloneNodeButton.Text = "Clone Node";
+            this.cloneNodeButton.UseVisualStyleBackColor = true;
+            this.cloneNodeButton.Click += new System.EventHandler(this.cloneNodeButton_Click);
             // 
             // textColorPreview
             // 
@@ -265,14 +293,15 @@
             // 
             // connectionsBox
             // 
+            this.connectionsBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.connectionsBox.Controls.Add(this.lineColorPreview);
             this.connectionsBox.Controls.Add(this.connectionLineColorLabel);
             this.connectionsBox.Controls.Add(this.connectionLineWidthLabel);
             this.connectionsBox.Controls.Add(this.connectionLineWidthTextbox);
             this.connectionsBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.connectionsBox.Location = new System.Drawing.Point(819, 42);
+            this.connectionsBox.Location = new System.Drawing.Point(462, 68);
             this.connectionsBox.Name = "connectionsBox";
-            this.connectionsBox.Size = new System.Drawing.Size(153, 84);
+            this.connectionsBox.Size = new System.Drawing.Size(150, 84);
             this.connectionsBox.TabIndex = 4;
             this.connectionsBox.TabStop = false;
             this.connectionsBox.Text = "Connection Lines";
@@ -331,30 +360,108 @@
             0});
             this.connectionLineWidthTextbox.ValueChanged += new System.EventHandler(this.onValueChangedHandler);
             // 
-            // cloneNodeButton
+            // mainToolstrip
             // 
-            this.cloneNodeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cloneNodeButton.Location = new System.Drawing.Point(6, 196);
-            this.cloneNodeButton.Name = "cloneNodeButton";
-            this.cloneNodeButton.Size = new System.Drawing.Size(141, 23);
-            this.cloneNodeButton.TabIndex = 15;
-            this.cloneNodeButton.Text = "Clone Node";
-            this.cloneNodeButton.UseVisualStyleBackColor = true;
-            this.cloneNodeButton.Click += new System.EventHandler(this.cloneNodeButton_Click);
+            this.mainToolstrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.mainToolstrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileMenuDropdown,
+            this.editMenuDropdown});
+            this.mainToolstrip.Location = new System.Drawing.Point(0, 0);
+            this.mainToolstrip.Name = "mainToolstrip";
+            this.mainToolstrip.Padding = new System.Windows.Forms.Padding(0);
+            this.mainToolstrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.mainToolstrip.Size = new System.Drawing.Size(624, 25);
+            this.mainToolstrip.TabIndex = 5;
+            // 
+            // fileMenuDropdown
+            // 
+            this.fileMenuDropdown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.fileMenuDropdown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newMapButton,
+            this.openMapButton,
+            this.saveMapButton,
+            this.exportMapButton});
+            this.fileMenuDropdown.Image = ((System.Drawing.Image)(resources.GetObject("fileMenuDropdown.Image")));
+            this.fileMenuDropdown.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.fileMenuDropdown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.fileMenuDropdown.Name = "fileMenuDropdown";
+            this.fileMenuDropdown.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.fileMenuDropdown.ShowDropDownArrow = false;
+            this.fileMenuDropdown.Size = new System.Drawing.Size(49, 22);
+            this.fileMenuDropdown.Text = "File";
+            this.fileMenuDropdown.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // openMapButton
+            // 
+            this.openMapButton.Name = "openMapButton";
+            this.openMapButton.Size = new System.Drawing.Size(180, 22);
+            this.openMapButton.Text = "Open Map";
+            // 
+            // saveMapButton
+            // 
+            this.saveMapButton.Name = "saveMapButton";
+            this.saveMapButton.Size = new System.Drawing.Size(180, 22);
+            this.saveMapButton.Text = "Save Map";
+            // 
+            // exportMapButton
+            // 
+            this.exportMapButton.Name = "exportMapButton";
+            this.exportMapButton.Size = new System.Drawing.Size(180, 22);
+            this.exportMapButton.Text = "Export Map";
+            // 
+            // newMapButton
+            // 
+            this.newMapButton.Name = "newMapButton";
+            this.newMapButton.Size = new System.Drawing.Size(180, 22);
+            this.newMapButton.Text = "New Map";
+            // 
+            // editMenuDropdown
+            // 
+            this.editMenuDropdown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.editMenuDropdown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.undoButton,
+            this.redoButton,
+            this.setDefaultStylesButton});
+            this.editMenuDropdown.Image = ((System.Drawing.Image)(resources.GetObject("editMenuDropdown.Image")));
+            this.editMenuDropdown.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.editMenuDropdown.Name = "editMenuDropdown";
+            this.editMenuDropdown.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.editMenuDropdown.ShowDropDownArrow = false;
+            this.editMenuDropdown.Size = new System.Drawing.Size(51, 22);
+            this.editMenuDropdown.Text = "Edit";
+            // 
+            // undoButton
+            // 
+            this.undoButton.Enabled = false;
+            this.undoButton.Name = "undoButton";
+            this.undoButton.Size = new System.Drawing.Size(180, 22);
+            this.undoButton.Text = "Undo";
+            // 
+            // redoButton
+            // 
+            this.redoButton.Enabled = false;
+            this.redoButton.Name = "redoButton";
+            this.redoButton.Size = new System.Drawing.Size(180, 22);
+            this.redoButton.Text = "Redo";
+            // 
+            // setDefaultStylesButton
+            // 
+            this.setDefaultStylesButton.Name = "setDefaultStylesButton";
+            this.setDefaultStylesButton.Size = new System.Drawing.Size(180, 22);
+            this.setDefaultStylesButton.Text = "Set Default Styles";
             // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(984, 625);
+            this.ClientSize = new System.Drawing.Size(624, 455);
+            this.Controls.Add(this.mainToolstrip);
             this.Controls.Add(this.connectionsBox);
             this.Controls.Add(this.selectedNodeBox);
             this.Controls.Add(this.canvas);
             this.Controls.Add(this.addNodeButton);
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1000, 664);
-            this.MinimumSize = new System.Drawing.Size(1000, 664);
+            this.MinimumSize = new System.Drawing.Size(640, 494);
             this.Name = "mainForm";
             this.Text = "Bubble Map Maker";
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
@@ -368,7 +475,10 @@
             this.connectionsBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lineColorPreview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.connectionLineWidthTextbox)).EndInit();
+            this.mainToolstrip.ResumeLayout(false);
+            this.mainToolstrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -394,6 +504,16 @@
         private System.Windows.Forms.PictureBox textColorPreview;
         private System.Windows.Forms.PictureBox lineColorPreview;
         private System.Windows.Forms.Button cloneNodeButton;
+        private System.Windows.Forms.ToolStrip mainToolstrip;
+        private System.Windows.Forms.ToolStripDropDownButton fileMenuDropdown;
+        private System.Windows.Forms.ToolStripMenuItem openMapButton;
+        private System.Windows.Forms.ToolStripMenuItem saveMapButton;
+        private System.Windows.Forms.ToolStripMenuItem exportMapButton;
+        private System.Windows.Forms.ToolStripMenuItem newMapButton;
+        private System.Windows.Forms.ToolStripDropDownButton editMenuDropdown;
+        private System.Windows.Forms.ToolStripMenuItem undoButton;
+        private System.Windows.Forms.ToolStripMenuItem redoButton;
+        private System.Windows.Forms.ToolStripMenuItem setDefaultStylesButton;
     }
 }
 
